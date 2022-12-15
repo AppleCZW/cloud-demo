@@ -1,0 +1,65 @@
+server:
+  port: 8090
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.1.4:3306/cloud_order?useSSL=false
+    username: root
+    password: 123
+    driver-class-name: com.mysql.jdbc.Driver
+  application:
+      name: orderservice
+  cloud:
+    nacos:
+        server-addr: localhost:8848
+        discovery:
+          cluster-name: HZ #集群的名称
+          #namespace: b6a48abe-bddf-4943-9787-9179ae6ba1d9 #demo环境
+
+          #sentinel 配置
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+
+mybatis:
+  type-aliases-package: cn.itcast.user.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    cn.itcast: debug
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
+userservice:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.alibaba.cloud.nacos.ribbon.NacosRule # 负载均衡规则
+
+
+#eureka:
+#  client:
+#    service-url: #eureka的地址信息
+#      defaultZone: http://127.0.0.1:10086/eureka
+#
+
+#
+#ribbon:
+#  eager-load:
+#    enabled: true
+#    clients:
+#      -userservice
+
+#下面是feign的日志配置
+#feign:
+#  client:
+#    config:
+#      default:
+#        logger-level: FULL
+
+
+#下面是feign的性能的方面 使用连接池
+feign:
+  httpclient:
+    enabled: true #支持httpclient
+    max-connections: 20 #最大连接数
+    max-connections-per-route: 10 # 单个路径的最大连接数
+
+
